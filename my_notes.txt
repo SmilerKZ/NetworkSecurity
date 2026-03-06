@@ -1,0 +1,2 @@
+local mlflow works well when you run:
+mlflow ui --backend-store-uri sqlite:///D:/Mukhtar/Study/Udemy/MLops/git%20projects/NetworkSecurity/mlflow.db

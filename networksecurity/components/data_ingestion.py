@@ -1,11 +1,13 @@
 from networksecurity.exception.exception import NetworkSecurityException
 from networksecurity.logging.logger import logging
 
+from networksecurity.entity.config_entity import TrainingPipelineConfig
 
 ## configuration of the Data Ingestion Config
 
 from networksecurity.entity.config_entity import DataIngestionConfig
 from networksecurity.entity.artifact_entity import DataIngestionArtifact
+
 import os
 import sys
 import numpy as np
@@ -57,6 +59,16 @@ class DataIngestion:
         except Exception as e:
             raise NetworkSecurityException(e,sys)
         
+    def read_feature_store(self):
+        try:
+            feature_store_file_path=self.data_ingestion_config.feature_store_file_path
+            #reading a feature store
+            dataframe = pd.read_csv(feature_store_file_path)
+            return dataframe
+            
+        except Exception as e:
+            raise NetworkSecurityException(e,sys)
+        
     def split_data_as_train_test(self,dataframe: pd.DataFrame):
         try:
             train_set, test_set = train_test_split(
@@ -92,6 +104,11 @@ class DataIngestion:
         try:
             dataframe=self.export_collection_as_dataframe()
             dataframe=self.export_data_into_feature_store(dataframe)
+
+            #print('1')
+            #dataframe = self.read_feature_store()
+            #print('2')
+
             self.split_data_as_train_test(dataframe)
             dataingestionartifact=DataIngestionArtifact(trained_file_path=self.data_ingestion_config.training_file_path,
                                                         test_file_path=self.data_ingestion_config.testing_file_path)
@@ -99,3 +116,6 @@ class DataIngestion:
 
         except Exception as e:
             raise NetworkSecurityException
+        
+
+
