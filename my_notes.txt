@@ -1,2 +1,14 @@
 local mlflow works well when you run:
 mlflow ui --backend-store-uri sqlite:///D:/Mukhtar/Study/Udemy/MLops/git%20projects/NetworkSecurity/mlflow.db
+
+run fastapi
+uvicorn app:app --reload
+
+EC2 setup
+sudo apt-get update -y
+sudo apt-get upgrade -y
+
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker ubuntu
+newgrp docker
